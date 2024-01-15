@@ -1,7 +1,10 @@
 ## Personal Blog V0.0.1
 
 This is the blog part for the personal portfolio of Ashfaq Hussain Ahmed
-
+### Tech Stack
+- Laravel v10.40.0
+- Mysql 8.3
+- Laravel Sail for local dockerized development
 ## Contact Me:
 - [LinkedIn](https://www.linkedin.com/in/ashfaqhahmed/)
 - [Twitter](https://twitter.com/ashfaq8495)
