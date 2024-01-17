@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->nullable()->unique();
             $table->text('content');
             $table->string('feature_image')->nullable();
             $table->string('status')->default(Status::DRAFT);
@@ -29,6 +29,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropForeign(['author_id']);
+            $table->dropIfExists();
+        });
     }
 };
