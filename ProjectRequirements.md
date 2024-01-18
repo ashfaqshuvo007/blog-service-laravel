@@ -20,19 +20,23 @@ Personal Blog
   - Email
   - username
   - password
-  - role (Enum)
+  - role
 - Posts
   - Title
   - slug
   - pretext
   - content
   - feature_image
-  - category_id
-  - author_id
+  - Categories
+  - Tags
+  - Media
+  - Author
 - Categories
   - Title
   - Description
-- Blog Media
+- Tags
+  - Title
+  - Description
+- Media
+  - name
   - type
-  - url
-  - post_id

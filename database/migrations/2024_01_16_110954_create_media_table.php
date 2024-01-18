@@ -1,6 +1,6 @@
 <?php
 
-use App\Constants\Role;
+use App\Constants\MediaType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,17 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('username')->nullable();
-            $table->string('role')->default(Role::USER);
-            $table->rememberToken();
+            $table->string('type')->default(MediaType::IMAGE);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('media');
     }
 };
