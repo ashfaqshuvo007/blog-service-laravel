@@ -17,4 +17,36 @@ class Post extends Model
         'status',
         'author_id'
     ];
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::created(function ($post) {
+            $post->update([
+                'slug' => $post->title,
+            ]);
+        });
+    }
+
+    public function setSlugAttribute($value): void
+    {
+        if (static::whereSlug($slug = str_slug($value))->exists()) {
+            $slug - $this->incrementSlug($slug);
+        }
+
+        $this->attributes['slug'] = $slug;
+    }
+
+    public function incrementSlug(string $slug): string
+    {
+        $max = static::whereTitle($this->title)->latest('id')->skip(1)->value('slug');
+
+        if ($max[-1]) {
+            return preg_replace_callback('/(\d+)$/', function($matches) {
+                return $matches[1] + 1;
+            }, $max);
+        }
+        return "{$slug}-2";
+    }
 }
