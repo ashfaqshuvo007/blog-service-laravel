@@ -18,6 +18,21 @@ class Post extends Model
         'author_id'
     ];
 
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     protected static function boot(): void
     {
         parent::boot();
@@ -43,7 +58,7 @@ class Post extends Model
         $max = static::whereTitle($this->title)->latest('id')->skip(1)->value('slug');
 
         if ($max[-1]) {
-            return preg_replace_callback('/(\d+)$/', function($matches) {
+            return preg_replace_callback('/(\d+)$/', function ($matches) {
                 return $matches[1] + 1;
             }, $max);
         }
