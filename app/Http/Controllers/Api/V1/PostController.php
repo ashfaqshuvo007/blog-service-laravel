@@ -23,7 +23,6 @@ class PostController extends Controller
      */
     public function store(PostStoreRequest $request)
     {
-//        $slug = SlugDuplicateChecker::createUniqueSlug('posts', Str::slug($request->title));
         $post = Post::create($request->validated());
 
         return PostResource::make(Post::find($post->id));
