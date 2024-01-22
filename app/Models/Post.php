@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -43,11 +45,10 @@ class Post extends Model
             ]);
         });
     }
-
     public function setSlugAttribute($value): void
     {
-        if (static::whereSlug($slug = str_slug($value))->exists()) {
-            $slug - $this->incrementSlug($slug);
+        if (static::whereSlug($slug = Str::slug($value))->exists()) {
+            $slug = $this->incrementSlug($slug);
         }
 
         $this->attributes['slug'] = $slug;
@@ -55,13 +56,14 @@ class Post extends Model
 
     public function incrementSlug(string $slug): string
     {
-        $max = static::whereTitle($this->title)->latest('id')->skip(1)->value('slug');
 
-        if ($max[-1]) {
+        $old_slug = DB::table('posts')->where('title', $this->title)->latest('id')->skip(1)->value('slug');
+
+        if (is_numeric($old_slug[-1])) {
             return preg_replace_callback('/(\d+)$/', function ($matches) {
                 return $matches[1] + 1;
-            }, $max);
+            }, $old_slug);
         }
-        return "{$slug}-2";
+        return "{$old_slug}-2";
     }
 }
