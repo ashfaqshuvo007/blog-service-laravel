@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::prefix('v1')->group(function () {
     Route::resource('posts', PostController::class);
+    Route::get('/post/{slug}', [PostController::class, 'singlePost']);
 });
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
