@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Services\PostService;
 
 class PostController extends Controller
 {
@@ -37,18 +38,26 @@ class PostController extends Controller
     }
 
     /**
+     * Display the specified resource by Slug.
+     */
+    public function singlePost(string $slug): PostResource
+    {
+        return PostResource::make(Post::where('slug', $slug)->first());
+    }
+
+    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostUpdateRequest $request, string $id, PostService $postService)
     {
-        //
+        return PostResource::make($postService->updatePost($id, $request->validated()));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, PostService $postService)
     {
-        //
+        return $postService->deletePost($id);
     }
 }

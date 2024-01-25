@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
@@ -22,7 +23,8 @@ class PostResource extends JsonResource
             'pretext' => Str::limit($this->content,50),
             'content' => $this->content,
             'status' => $this->status,
-            'user' => $this->author_id,
+            'readingMinutes' => Str::readingMinutes($this->content, 200),
+            'author' => UserResource::make(User::findOrFail($this->author_id)),
             'feature_image' => $this->feature_image,
             'created' => $this->created_at,
             'updated' => $this->updated_at
