@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class PostStoreRequest extends FormRequest
 {
@@ -23,8 +24,11 @@ class PostStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255|min:5',
-            'content' => 'required|string',
-            'author_id' => 'required'
+            'content' => 'required',
+            'author_id' => 'required',
+            'feature_image' => ['nullable', File::image()->min('5mb')],
+            'categories' => ['required', 'array', 'min:1'],
+            'tags' => ['required', 'array', 'min:1']
         ];
     }
 }
