@@ -26,7 +26,7 @@ class PostController extends Controller
     {
         return PostResource::make(
             Post::find(
-                $postService->createPost($request)->id
+                $postService->createPost($request->validated())->id
             )
         );
     }

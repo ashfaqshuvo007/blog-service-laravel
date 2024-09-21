@@ -7,12 +7,12 @@ use App\Models\Post;
 
 class PostService
 {
-    public function createPost(PostStoreRequest $request)
+    public function createPost($data)
     {
-        $post = Post::create($request->validated());
+        $post = Post::create($data->validated());
 
-        $post->categories()->sync($request->get('categories'));
-        $post->categories()->sync($request->get('tags'));
+        $post->categories()->sync($data->get('categories'));
+        $post->categories()->sync($data->get('tags'));
 
         return $post;
     }
@@ -27,7 +27,7 @@ class PostService
         return $post;
     }
 
-    public function deletePost($id)
+    public function deletePost($id): \Illuminate\Http\JsonResponse
     {
         if (empty(Post::destroy($id))) {
             return response()->json([
