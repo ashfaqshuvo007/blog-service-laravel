@@ -2,10 +2,21 @@
 
 namespace App\Services;
 
+use App\Http\Requests\PostStoreRequest;
 use App\Models\Post;
 
 class PostService
 {
+    public function createPost($data)
+    {
+        $post = Post::create($data->validated());
+
+        $post->categories()->sync($data->get('categories'));
+        $post->categories()->sync($data->get('tags'));
+
+        return $post;
+    }
+
     public function updatePost($id, $data): Post
     {
         $post = Post::findorFail($id);
@@ -16,7 +27,7 @@ class PostService
         return $post;
     }
 
-    public function deletePost($id)
+    public function deletePost($id): \Illuminate\Http\JsonResponse
     {
         if (empty(Post::destroy($id))) {
             return response()->json([

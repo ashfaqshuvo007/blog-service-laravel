@@ -22,11 +22,13 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostStoreRequest $request)
+    public function store(PostStoreRequest $request, PostService $postService)
     {
-        $post = Post::create($request->validated());
-
-        return PostResource::make(Post::find($post->id));
+        return PostResource::make(
+            Post::find(
+                $postService->createPost($request->validated())->id
+            )
+        );
     }
 
     /**
@@ -48,9 +50,14 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PostUpdateRequest $request, string $id, PostService $postService)
-    {
-        return PostResource::make($postService->updatePost($id, $request->validated()));
+    public function update(
+        PostUpdateRequest $request,
+        string $id,
+        PostService $postService
+    ) {
+        return PostResource::make(
+            $postService->updatePost($id, $request->validated())
+        );
     }
 
     /**
