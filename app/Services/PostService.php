@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Requests\PostStoreRequest;
+
 use App\Models\Post;
 
 class PostService
