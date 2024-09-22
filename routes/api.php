@@ -14,13 +14,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::post('/login', [UserController::class, 'login']);
+
 Route::prefix('v1')->group(function () {
-    Route::resource('posts', PostController::class);
-    Route::get('/post/{slug}', [PostController::class, 'singlePost']);
+    Route::resource('posts', PostController::class)->middleware("auth:sanctum");
+    Route::get('/post/{slug}', [PostController::class, 'singlePost'])->middleware("auth:sanctum");
 
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->middleware("auth:sanctum");
 });
-
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
