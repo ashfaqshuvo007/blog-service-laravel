@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -30,8 +31,8 @@ class Handler extends ExceptionHandler
             if ($request->is('api/*')) {
                 return response()->json([
                     'message' => 'Record Not Found.',
-                    'status' => Response::HTTP_NOT_FOUND
-                ], Response::HTTP_NOT_FOUND);
+                    'status' => ResponseAlias::HTTP_NOT_FOUND
+                ], ResponseAlias::HTTP_NOT_FOUND);
             }
         });
 
@@ -39,8 +40,8 @@ class Handler extends ExceptionHandler
             if ($request->is('api/*')) {
                 return response()->json([
                     'message' => 'You are not authorized for this operation.',
-                    'status' => Response::HTTP_FORBIDDEN
-                ], Response::HTTP_FORBIDDEN);
+                    'status' => ResponseAlias::HTTP_FORBIDDEN
+                ], ResponseAlias::HTTP_FORBIDDEN);
             }
         });
     }
