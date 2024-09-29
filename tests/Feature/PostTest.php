@@ -67,8 +67,8 @@ class PostTest extends TestCase
         $this->withoutMiddleware();
 
         //Arrange
-        $user = User::factory()->create();
-        $category = Category::factory()->create();
+        $user = User::factory()->create()->first();
+        $category = Category::factory()->create()->first();
         $tags = Tag::factory()->count(2)->create();
 
         // Act
@@ -78,11 +78,21 @@ class PostTest extends TestCase
                 'content' => 'Test content',
                 'author_id' => $user->id,
                 'categories' => [$category->id],
-                'tags' => [$tags[0]->id, $tags[1]->id],
+                'tags' => [$tags[0]->id, $tags[1]->id]
             ]
         );
 
         // Assert
-        $response->assertStatus(201);
+        $response->assertStatus(200)
+        ->assertJson(fn(AssertableJson $json) => $json->whereType('data', 'array'));
+    }
+
+    public function testDeletePost(): void
+    {
+        $this->withoutMiddleware();
+        $post = Post::factory()->create();
+        $response = $this->withoutExceptionHandling()->delete("/api/v1/posts/{$post->id}");
+        $response->assertStatus(200);
+
     }
 }
