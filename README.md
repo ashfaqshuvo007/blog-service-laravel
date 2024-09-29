@@ -1,4 +1,4 @@
-## Personal Blog V0.0.1
+## Personal Blog V1.0.0
 
 This is the blog part for the personal portfolio of Ashfaq Hussain Ahmed
 ### Tech Stack
