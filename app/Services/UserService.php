@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -20,7 +21,7 @@ class UserService
 
     }
 
-    public function deleteUser($id): \Illuminate\Http\JsonResponse
+    public function deleteUser($id): JsonResponse
     {
         if(empty(User::destroy($id))) {
             return response()->json([

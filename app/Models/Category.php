@@ -14,7 +14,7 @@ class Category extends Model
         'description'
     ];
 
-    public function posts()
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Post::class);
     }
