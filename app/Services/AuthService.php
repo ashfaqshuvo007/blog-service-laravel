@@ -23,6 +23,8 @@ class AuthService
         $token = $user->createToken($user->name .'-Auth-token', ['*'], now()->addHour())->plainTextToken;
         return response()->json([
             'message' => 'The access token was successfully generated.',
+            'token_type' => 'Bearer',
+            'expires_in' => 3600,
             'access_token' => $token,
         ]);
     }
