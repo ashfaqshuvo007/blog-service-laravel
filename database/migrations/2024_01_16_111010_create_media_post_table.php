@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('media_post', function (Blueprint $table) {
-            $table->foreignId('media_id')->constrained('media');
-            $table->foreignId('post_id')->constrained('posts');
+            $table->foreignId('media_id')->constrained('media')->cascadeOnDelete();
+            $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
         });
     }
 

@@ -8,6 +8,8 @@ use App\Http\Requests\PostUpdateRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Services\PostService;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 
 class PostController extends Controller
 {
@@ -26,7 +28,7 @@ class PostController extends Controller
     {
         return PostResource::make(
             Post::find(
-                $postService->createPost($request->validated())->id
+                $postService->createPost($request)->id
             )
         );
     }
@@ -44,7 +46,8 @@ class PostController extends Controller
      */
     public function singlePost(string $slug): PostResource
     {
-        return PostResource::make(Post::where('slug', $slug)->first());
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return PostResource::make($post);
     }
 
     /**

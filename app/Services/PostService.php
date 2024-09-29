@@ -10,9 +10,8 @@ class PostService
     public function createPost($data)
     {
         $post = Post::create($data->validated());
-
         $post->categories()->sync($data->get('categories'));
-        $post->categories()->sync($data->get('tags'));
+        $post->tags()->sync($data->get('tags'));
 
         return $post;
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +16,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [UserController::class, 'login']);
 
 Route::prefix('v1')->group(function () {
-    Route::resource('posts', PostController::class)->middleware("auth:sanctum");
-    Route::get('/post/{slug}', [PostController::class, 'singlePost'])->middleware("auth:sanctum");
 
-    Route::resource('users', UserController::class)->middleware("auth:sanctum");
+    Route::post('/login', [UserController::class, 'login'])->name('login');
+
+    Route::resource('posts', PostController::class)->middleware(
+        "auth:sanctum"
+    );
+    Route::middleware('auth:sanctum')->get(
+        '/post/{slug}',
+        [PostController::class, 'singlePost']
+    );
+
+    Route::resource('users', UserController::class)->middleware(
+        "auth:sanctum"
+    );
+
+    Route::resource('categories', CategoryController::class)->middleware(
+        'auth:sanctum'
+    );
 });
+
